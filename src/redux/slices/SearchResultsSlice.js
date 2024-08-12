@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchBooks = createAsyncThunk(
-  "searchResults/fetchSearchResults",
+  "books/fetchBooks",
   async (query, thunkAPI) => {
     const response = await fetch(
       `https://www.googleapis.com/books/v1/volumes?q=${query}&startIndex=0&maxResults=20`
@@ -31,15 +31,15 @@ const searchResultsSlice = createSlice({
       );
     },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchBooks.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchBooks.fullfilled, (state, action) => {
+      .addCase(fetchBooks.fulfilled, (state, action) => {
+        // Fixed typo
         state.status = "succeeded";
-        state.searchResults = action.payload;
+        state.books = action.payload; // Store books in state.books
       })
       .addCase(fetchBooks.rejected, (state, action) => {
         state.status = "failed";

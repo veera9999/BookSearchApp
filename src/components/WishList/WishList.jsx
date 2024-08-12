@@ -5,6 +5,7 @@ import { deleteFromWishList } from "../../redux/slices/SearchResultsSlice";
 export default function WishList() {
   const dispatch = useDispatch();
   const wishList = useSelector((state) => state.books.wishList);
+
   return (
     <div className="wishList">
       <h1>WishList</h1>

@@ -1,18 +1,24 @@
-import React from "react";
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchBooks } from "../../redux/slices/SearchResultsSlice";
 import _ from "lodash";
-export default function SearchBar({ onSearch }) {
+
+export default function SearchBar() {
   const [inputValue, setInputValue] = useState("");
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
-  const debouncedOnSearch = useCallback(_.debounce(onSearch, 1000), [onSearch]);
+  const debouncedOnSearch = useCallback(
+    _.debounce((query) => dispatch(fetchBooks(query)), 1000),
+    [dispatch]
+  );
 
   useEffect(() => {
     debouncedOnSearch(inputValue);
-  }, [inputValue]);
+  }, [inputValue, debouncedOnSearch]);
 
   return (
     <div className="search-bar">
@@ -25,7 +31,7 @@ export default function SearchBar({ onSearch }) {
       <span>
         <button
           onClick={() => {
-            onSearch(inputValue);
+            dispatch(fetchBooks(inputValue));
           }}>
           Search
         </button>
