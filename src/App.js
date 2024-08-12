@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { fetchBooks } from "./redux/slices/SearchResultsSlice";
+import SearchBar from "./components/SearchBar/SearchBar";
+import SearchResults from "./components/SearchResults/SearchResults";
+import WishList from "./components/WishList/WishList";
+import { useDispatch } from "react-redux";
+import "./App.css";
+import { Provider } from "react-redux";
+import store from "./redux/store/store";
 
-function App() {
+export default function App() {
+  const dispatch = useDispatch();
+
+  const handleSearch = (query) => {
+    if (query.trim()) {
+      dispatch(fetchBooks(query));
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <header>
+          <h1>Book Store</h1>
+        </header>
+
+        <div className="container">
+          <div>
+            <SearchBar onSearch={handleSearch} />
+            <SearchResults />
+          </div>
+          <WishList />
+        </div>
+      </div>
+    </Provider>
   );
 }
-
-export default App;
