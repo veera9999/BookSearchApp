@@ -37,9 +37,8 @@ const searchResultsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
-        // Fixed typo
         state.status = "succeeded";
-        state.books = action.payload; // Store books in state.books
+        state.books = action.payload;
       })
       .addCase(fetchBooks.rejected, (state, action) => {
         state.status = "failed";

@@ -2,13 +2,14 @@ import React from "react";
 import BookCard from "./BookCard";
 import { addToWishList } from "../../redux/slices/SearchResultsSlice";
 import { useSelector, useDispatch } from "react-redux";
+import Loader from "./Loader";
 
 export default function SearchResults() {
   const { books, status } = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
   if (status === "loading") {
-    return <div>Loading......</div>;
+    return <Loader />;
   }
   return (
     <div>
