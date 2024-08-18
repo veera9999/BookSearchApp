@@ -1,6 +1,10 @@
 import React from "react";
 
 export default function BookCard({ book, addToWishList }) {
+  if (!book || !book.volumeInfo) {
+    return null;
+  }
+
   const { imageLinks, title, authors } = book.volumeInfo;
 
   return (
@@ -9,9 +13,13 @@ export default function BookCard({ book, addToWishList }) {
       onClick={() => {
         addToWishList(book);
       }}>
-      <img src={imageLinks?.thumbnail} alt="" />
-      <h4>Title : {title}</h4>
-      <p>Author: {authors}</p>
+      {imageLinks?.thumbnail ? (
+        <img src={imageLinks.thumbnail} alt={title} />
+      ) : (
+        <div>No Image Available</div>
+      )}
+      <h4>Title: {title || "Title Not Available"}</h4>
+      <p>Author: {authors?.join(", ") || "Author Not Available"}</p>
     </div>
   );
 }

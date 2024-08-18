@@ -4,8 +4,8 @@ import { addToWishList } from "../../redux/slices/SearchResultsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "./Loader";
 
-export default function SearchResults() {
-  const { books, status } = useSelector((state) => state.books);
+export default function SearchResults({ book }) {
+  const { status } = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
   if (status === "loading") {
@@ -15,7 +15,7 @@ export default function SearchResults() {
     <div>
       <h2>Search Results:</h2>
       <ul>
-        {books?.map((book) => (
+        {book?.map((book) => (
           <BookCard
             book={book}
             addToWishList={() => dispatch(addToWishList(book))}
